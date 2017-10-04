@@ -89,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     /**
      * Return the customers from the read-side view.
-     * @return A sequence of customer.
+     * @return A list of customers.
      */
     @Override
     public ServiceCall<NotUsed, List<Customer>> getCustomers() {
