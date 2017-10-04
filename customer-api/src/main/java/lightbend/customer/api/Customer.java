@@ -2,6 +2,7 @@ package lightbend.customer.api;
 
 import com.lightbend.lagom.serialization.Jsonable;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import javax.annotation.concurrent.Immutable;
@@ -9,6 +10,7 @@ import javax.annotation.concurrent.Immutable;
 @Data
 @AllArgsConstructor
 @Immutable
+@Builder
 public final class Customer implements Jsonable {
     private String id; // Nullable for the POST method
     @NonNull private String name;

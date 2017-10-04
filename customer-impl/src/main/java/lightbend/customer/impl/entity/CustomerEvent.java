@@ -10,15 +10,11 @@ import com.lightbend.lagom.serialization.Jsonable;
 
 public interface CustomerEvent extends Jsonable, AggregateEvent<CustomerEvent> {
 
-    /*
-     * AggregateEventTag is used by Akka Cluster Sharding to setup read-side processing of persistent events
-     */
     AggregateEventTag<CustomerEvent> TAG = AggregateEventTag.of(CustomerEvent.class);
 
     @Override
     default AggregateEventTagger<CustomerEvent> aggregateTag() {
-        return AggregateEventTag.sharded(CustomerEvent.class,
-                4); // numShards should not change in the future; see Akka Cluster docs for guidance
+        return TAG;
     }
 
     @Data

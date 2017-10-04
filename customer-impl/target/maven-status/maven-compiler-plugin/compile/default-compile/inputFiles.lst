@@ -1,8 +1,7 @@
-/Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/readside/CustomerRecord.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/entity/CustomerEvent.java
+/Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/readside/CustomerEventProcessor.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/CustomerModule.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/entity/CustomerEntity.java
-/Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/readside/Customers.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/CustomerServiceImpl.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/entity/CustomerCommand.java
 /Users/eric/Desktop/lagom-customer/customer-impl/src/main/java/lightbend/customer/impl/entity/CustomerState.java

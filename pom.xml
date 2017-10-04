@@ -21,7 +21,7 @@
                 <artifactId>lagom-maven-plugin</artifactId>
                 <version>${lagom.version}</version>
                 <configuration>
-                    <cassandraEnabled>false</cassandraEnabled>
+                    <cassandraEnabled>true</cassandraEnabled>
                     <kafkaEnabled>false</kafkaEnabled>
                 </configuration>
             </plugin>
@@ -68,11 +68,6 @@
                 <version>${lagom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>5.2.10.Final</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

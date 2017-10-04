@@ -9,7 +9,8 @@ import com.lightbend.lagom.javadsl.api.Descriptor;
 import com.lightbend.lagom.javadsl.api.Service;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.transport.Method;
-import org.pcollections.PSequence;
+
+import java.util.List;
 
 /**
  * Service interface to add, disable, get, and return all customers.
@@ -22,7 +23,7 @@ public interface CustomerService extends Service {
 
     ServiceCall<NotUsed, Done> disableCustomer(String id);
 
-    ServiceCall<NotUsed, PSequence<Customer>> getCustomers();
+    ServiceCall<NotUsed, List<Customer>> getCustomers();
 
     /**
      * Service descriptor to setup the routes to the service endpoints.

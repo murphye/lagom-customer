@@ -6,17 +6,19 @@ import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.transport.NotFound;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
+import com.lightbend.lagom.javadsl.persistence.ReadSide;
+import com.lightbend.lagom.javadsl.persistence.cassandra.CassandraSession;
 import lightbend.customer.api.Customer;
 import lightbend.customer.api.CustomerService;
 import lightbend.customer.impl.entity.CustomerCommand;
 import lightbend.customer.impl.entity.CustomerEntity;
 import lightbend.customer.impl.entity.CustomerState;
-import lightbend.customer.impl.readside.Customers;
-import org.pcollections.PSequence;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 /**
  * Implement the CustomerService interface to add, disable, get, and return all customers.
@@ -24,13 +26,14 @@ import java.util.concurrent.CompletionStage;
 public class CustomerServiceImpl implements CustomerService {
 
     private final PersistentEntityRegistry registry;
-    private final Customers customers;
+    private final CassandraSession cassandraSession;
 
     @Inject
-    public CustomerServiceImpl(PersistentEntityRegistry persistentEntityRegistry, Customers customers) {
+    public CustomerServiceImpl(PersistentEntityRegistry persistentEntityRegistry, CassandraSession cassandraSession, ReadSide readSide) {
         this.registry = persistentEntityRegistry;
         this.registry.register(CustomerEntity.class);
-        this.customers = customers;
+        this.cassandraSession = cassandraSession;
+        readSide.register(CustomerEventProcessor.class);
     }
 
     /**
@@ -89,7 +92,17 @@ public class CustomerServiceImpl implements CustomerService {
      * @return A sequence of customer.
      */
     @Override
-    public ServiceCall<NotUsed, PSequence<Customer>> getCustomers() {
-        return request -> customers.all();
+    public ServiceCall<NotUsed, List<Customer>> getCustomers() {
+        return request -> cassandraSession.selectAll("SELECT id, name, city, state, zipcode FROM customer")
+                .thenApply(rows ->
+                        rows.stream()
+                                .map(row -> Customer.builder().id(row.getString("id"))
+                                        .name(row.getString("name"))
+                                        .city(row.getString("city"))
+                                        .state(row.getString("state"))
+                                        .zipCode(row.getString("zipcode"))
+                                        .build()
+                                ).collect(Collectors.toList())
+                ).toCompletableFuture();
     }
 }
