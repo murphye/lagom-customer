@@ -47,8 +47,8 @@ public class CustomerEventProcessor extends ReadSideProcessor<CustomerEvent> {
                 .setPrepare(evtTag -> prepareWriteCustomer()
                         .thenCombine(prepareDeleteCustomer(), (writeDone, deleteDone) -> Done.getInstance())
                 )
-                .setEventHandler(CustomerEvent.CustomerAdded.class, this::processPostAdded)
-                .setEventHandler(CustomerEvent.CustomerDisabled.class, this::processPostDeleted)
+                .setEventHandler(CustomerEvent.CustomerAdded.class, this::processCustomerAdded)
+                .setEventHandler(CustomerEvent.CustomerDisabled.class, this::processCustomerDisabled)
                 .build();
     }
 
@@ -69,7 +69,7 @@ public class CustomerEventProcessor extends ReadSideProcessor<CustomerEvent> {
         this.writeCustomer = statement;
     }
 
-    private CompletionStage<List<BoundStatement>> processPostAdded(CustomerEvent.CustomerAdded customerAddedEvent) {
+    private CompletionStage<List<BoundStatement>> processCustomerAdded(CustomerEvent.CustomerAdded customerAddedEvent) {
         Customer customer = customerAddedEvent.getCustomer();
 
         BoundStatement bindWriteCustomer = writeCustomer.bind(
@@ -93,7 +93,7 @@ public class CustomerEventProcessor extends ReadSideProcessor<CustomerEvent> {
         this.deleteCustomer = deleteCustomer;
     }
 
-    private CompletionStage<List<BoundStatement>> processPostDeleted(CustomerEvent.CustomerDisabled customerDisabledEvent) {
+    private CompletionStage<List<BoundStatement>> processCustomerDisabled(CustomerEvent.CustomerDisabled customerDisabledEvent) {
         BoundStatement bindWriteCustomer = deleteCustomer.bind();
         bindWriteCustomer.setString("id", customerDisabledEvent.getCustomer().getId());
         return CassandraReadSide.completedStatements(Arrays.asList(bindWriteCustomer));
