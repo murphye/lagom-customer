@@ -4,9 +4,9 @@ import com.lightbend.lagom.javadsl.persistence.AggregateEvent;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTagger;
 import lightbend.customer.api.Customer;
-import lombok.Data;
 import lombok.NonNull;
 import com.lightbend.lagom.serialization.Jsonable;
+import lombok.Value;
 
 public interface CustomerEvent extends Jsonable, AggregateEvent<CustomerEvent> {
 
@@ -17,13 +17,13 @@ public interface CustomerEvent extends Jsonable, AggregateEvent<CustomerEvent> {
         return TAG;
     }
 
-    @Data
+    @Value
     public final class CustomerAdded implements CustomerEvent {
-        @NonNull final Customer customer;
+        @NonNull private final Customer customer;
     }
 
-    @Data
+    @Value
     public final class CustomerDisabled implements CustomerEvent {
-        @NonNull final Customer customer;
+        @NonNull private final Customer customer;
     }
 }

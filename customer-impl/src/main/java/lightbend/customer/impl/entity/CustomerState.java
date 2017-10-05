@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.lightbend.lagom.serialization.CompressedJsonable;
+import lombok.Value;
 
 /**
  * Customer state object used for event sourcing. Stored as binary data in the journal because of CompressedJsonable.
  */
-@Data
-@NoArgsConstructor
+@Value
 @AllArgsConstructor
 public final class CustomerState implements CompressedJsonable {
 
@@ -26,4 +26,12 @@ public final class CustomerState implements CompressedJsonable {
      * Whether the customer is enabled or not; acts like a soft delete.
      */
     private boolean enabled;
+
+    /**
+     * Used for initial state.
+     */
+    private CustomerState() {
+        this.customer = null;
+        this.enabled = false;
+    }
 }
