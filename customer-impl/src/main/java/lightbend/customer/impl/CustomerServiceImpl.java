@@ -2,6 +2,7 @@ package lightbend.customer.impl;
 
 import akka.Done;
 import akka.NotUsed;
+import com.google.common.collect.ImmutableList;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.transport.NotFound;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
@@ -15,10 +16,7 @@ import lightbend.customer.impl.entity.CustomerEntity;
 import lightbend.customer.impl.entity.CustomerState;
 
 import javax.inject.Inject;
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.CompletionStage;
-import java.util.stream.Collectors;
 
 /**
  * Implement the CustomerService interface to add, disable, get, and return all customers.
@@ -90,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return A list of customers.
      */
     @Override
-    public ServiceCall<NotUsed, List<Customer>> getCustomers() {
+    public ServiceCall<NotUsed, ImmutableList<Customer>> getCustomers() {
         return request -> cassandraSession.selectAll("SELECT id, name, city, state, zipcode FROM customer")
                 .thenApply(rows ->
                         rows.stream()
@@ -100,7 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
                                         .state(row.getString("state"))
                                         .zipCode(row.getString("zipcode"))
                                         .build()
-                                ).collect(Collectors.toList())
+                                ).collect(ImmutableList.toImmutableList())
                 ).toCompletableFuture();
     }
 }

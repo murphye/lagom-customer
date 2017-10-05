@@ -1,13 +1,13 @@
 package lightbend.customer.impl;
 
 import akka.Done;
+import com.google.common.collect.ImmutableList;
 import com.lightbend.lagom.javadsl.testkit.ServiceTest;
 import lightbend.customer.api.Customer;
 import lightbend.customer.api.CustomerService;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
-import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
@@ -51,8 +51,8 @@ public class CustomerServiceTest {
     @Test
     public void readSideShouldUpdate() throws Exception {
         Thread.sleep(3000); // Wait for read-side to update
-        CompletionStage<List<Customer>> msg3 = service.getCustomers().invoke();
-        List<Customer> customersResponse = msg3.toCompletableFuture().get(5, SECONDS);
+        CompletionStage<ImmutableList<Customer>> msg3 = service.getCustomers().invoke();
+        ImmutableList<Customer> customersResponse = msg3.toCompletableFuture().get(5, SECONDS);
         // Added record is now visible on read-side
         assertThat(customersResponse.size()).isEqualTo(1);
     }
