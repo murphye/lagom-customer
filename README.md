@@ -23,6 +23,8 @@ This implementation uses Cassandra for both the write-side and read-side.
 https://github.com/lagom/lagom/issues/592
 2. Set cassandra-query-journal.eventual-consistency-delay to 0s
  https://github.com/lagom/lagom/issues/497
+3. Delay as related to integration tests
+https://github.com/lagom/lagom/issues/634
  
 # Relevant Lombok Links
 
