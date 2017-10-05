@@ -21,7 +21,7 @@ public class CustomerEntity extends PersistentEntity<CustomerCommand, CustomerEv
 
         b.setCommandHandler(CustomerCommand.AddCustomer.class, (cmd, ctx) ->
                 ctx.thenPersist(new CustomerEvent.CustomerAdded(cmd.getCustomer()), evt ->
-                        ctx.reply(state().getCustomer())));
+                        ctx.reply(Done.getInstance())));
 
         b.setReadOnlyCommandHandler(CustomerCommand.GetCustomer.class, (cmd, ctx) ->
                 ctx.reply(state()));
@@ -33,7 +33,6 @@ public class CustomerEntity extends PersistentEntity<CustomerCommand, CustomerEv
 
         b.setEventHandler(CustomerEvent.CustomerAdded.class, evt -> {
             Customer newCustomer = evt.getCustomer();
-            newCustomer.setId(entityId());
             return new CustomerState(newCustomer, true);
         });
 

@@ -7,7 +7,9 @@ import com.lightbend.lagom.javadsl.testkit.PersistentEntityTestDriver.Outcome;
 import lightbend.customer.api.Customer;
 import org.junit.*;
 import org.junit.rules.TestName;
+
 import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -52,7 +54,7 @@ public class CustomerEntityTest {
 
 
     @Test
-    public void testCustomers() {
+    public void testCustomerEntity() {
 
         Customer customer = new Customer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25", "Eric Murphy", "San Francisco", "CA", "94105");
 

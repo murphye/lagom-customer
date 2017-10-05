@@ -11,7 +11,7 @@ import akka.Done;
 public interface CustomerCommand extends Jsonable {
 
     @Data
-    final class AddCustomer implements CustomerCommand, PersistentEntity.ReplyType<Customer> {
+    final class AddCustomer implements CustomerCommand, PersistentEntity.ReplyType<Done> {
         @NonNull private final Customer customer;
     }
 

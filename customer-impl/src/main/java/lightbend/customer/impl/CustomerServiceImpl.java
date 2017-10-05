@@ -50,11 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
      * @return The full customer object, including UUID.
      */
     @Override
-    public ServiceCall<Customer, Customer> addCustomer() {
-        return customer -> {
-            customer.setId(UUID.randomUUID().toString()); // Generate a new UUID
-            return entityRef(customer.getId()).ask(new CustomerCommand.AddCustomer(customer));
-        };
+    public ServiceCall<Customer, Done> addCustomer() {
+        return customer ->
+            entityRef(customer.getId()).ask(new CustomerCommand.AddCustomer(customer));
     }
 
     /**

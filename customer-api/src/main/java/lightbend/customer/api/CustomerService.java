@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface CustomerService extends Service {
 
-    ServiceCall<Customer, Customer> addCustomer();
+    ServiceCall<Customer, Done> addCustomer();
 
     ServiceCall<NotUsed, Customer> getCustomer(String id);
 
@@ -32,7 +32,7 @@ public interface CustomerService extends Service {
         return named("customer").withCalls(
                 restCall(Method.POST,   "/customer", this::addCustomer),
                 restCall(Method.GET,    "/customer/:customerId", this::getCustomer),
-                restCall(Method.DELETE, "/customer/:customerId", this::disableCustomer),
+                restCall(Method.POST, "/customer/disable/:customerId", this::disableCustomer),
                 restCall(Method.GET,    "/customer", this::getCustomers)
         ).withAutoAcl(true); // Used to setup ACLs for the API Gateway
     }
