@@ -7,12 +7,13 @@ import com.lightbend.lagom.javadsl.testkit.PersistentEntityTestDriver.Outcome;
 import lightbend.customer.api.Customer;
 import org.junit.*;
 import org.junit.rules.TestName;
+import org.junit.runners.MethodSorters;
 
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@FixMethodOrder(MethodSorters.JVM)
 public class CustomerEntityTest {
 
     static ActorSystem system;
@@ -47,14 +48,11 @@ public class CustomerEntityTest {
 
         // then no events should have been created
         assertThat(getPostOutcome.events()).isEmpty();
-
-        // and the state should still be empty
-        assertThat(getPostOutcome.state().getCustomer()).isNull();
     }
 
 
     @Test
-    public void testCustomerEntity() {
+    public void testCustomerEntity() throws Exception {
 
         Customer customer = new Customer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25", "Eric Murphy", "San Francisco", "CA", "94105");
 
@@ -65,7 +63,7 @@ public class CustomerEntityTest {
 
         // Check that customer was added
         assertThat(Collections.emptyList()).isEqualTo(outcome1.issues());
-        assertThat("Eric Murphy").isEqualTo(outcome1.state().getCustomer().getName());
+        assertThat("Eric Murphy").isEqualTo(outcome1.state().getCustomer().get().getName());
 
         // Disable the customer
         Outcome<CustomerEvent, CustomerState> outcome2 = driver.run(CustomerCommand.DisableCustomer.INSTANCE);
@@ -73,8 +71,7 @@ public class CustomerEntityTest {
 
         // Validate customer was disabled
         Outcome<CustomerEvent, CustomerState> outcome3 = driver.run(CustomerCommand.GetCustomer.INSTANCE);
-        assertThat(Collections.emptyList()).isEqualTo(outcome3.issues());
-        assertThat(false).isEqualTo(outcome3.state().isEnabled());
-
+        assertThat(1).isEqualTo(outcome3.issues().size()); // GetCustomer command will not be registered for disabled state
+        assertThat(outcome3.issues().get(0).toString().contains("GetCustomer")); // Validate error
     }
 }

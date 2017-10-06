@@ -5,6 +5,7 @@ import akka.NotUsed;
 import com.google.common.collect.ImmutableList;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.transport.NotFound;
+import com.lightbend.lagom.javadsl.api.transport.TransportException;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
 import com.lightbend.lagom.javadsl.persistence.ReadSide;
@@ -14,6 +15,7 @@ import lightbend.customer.api.CustomerService;
 import lightbend.customer.impl.entity.CustomerCommand;
 import lightbend.customer.impl.entity.CustomerEntity;
 import lightbend.customer.impl.entity.CustomerState;
+import lightbend.customer.impl.entity.CustomerStatus;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
@@ -63,11 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
         return notUsed -> {
             CompletionStage<CustomerState> getCustomer = entityRef(customerId).ask(CustomerCommand.GetCustomer.INSTANCE);
             return getCustomer.thenApply(customerState -> {
-                if (customerState.isEnabled()) { // Make sure it's enabled before returning
-                    return customerState.getCustomer();
-                } else {
-                    throw new NotFound("Customer " + customerId + " is disabled.");
-                }
+                return customerState.getCustomer().get();
             });
         };
     }

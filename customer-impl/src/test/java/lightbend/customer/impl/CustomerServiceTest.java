@@ -23,6 +23,8 @@ public class CustomerServiceTest {
 
     private static CustomerService service;
 
+    private static final String UUID = "daaa97b5-d5db-45b3-b1ed-1df5537828fd";
+
     @BeforeClass
     public static void setUp() {
         server = startServer(defaultSetup().withCassandra(true));
@@ -37,12 +39,12 @@ public class CustomerServiceTest {
 
     @Test
     public void shouldStoreCustomer() throws Exception {
-        Customer customer = new Customer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25", "Eric Murphy", "San Francisco", "CA", "94105");
+        Customer customer = new Customer(UUID, "Eric Murphy", "San Francisco", "CA", "94105");
 
         CompletionStage<Done> msg1 = service.addCustomer().invoke(customer);
         Done addCustomerResponse = msg1.toCompletableFuture().get(5, SECONDS);
 
-        CompletionStage<Customer> msg2 = service.getCustomer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25").invoke();
+        CompletionStage<Customer> msg2 = service.getCustomer(UUID).invoke();
         Customer customerResponse = msg2.toCompletableFuture().get(5, SECONDS);
 
         assertThat("Eric Murphy").isEqualTo(customerResponse.getName());
@@ -50,7 +52,7 @@ public class CustomerServiceTest {
 
     @Test
     public void readSideShouldUpdate() throws Exception {
-        Thread.sleep(3000); // Wait for read-side to update
+        Thread.sleep(5000); // Wait for read-side to update
         CompletionStage<ImmutableList<Customer>> msg3 = service.getCustomers().invoke();
         ImmutableList<Customer> customersResponse = msg3.toCompletableFuture().get(5, SECONDS);
         // Added record is now visible on read-side
@@ -59,15 +61,15 @@ public class CustomerServiceTest {
 
     @Test
     public void customerShouldBeDisabled() throws Exception {
-        CompletionStage<Done> msg4 = service.disableCustomer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25").invoke();
+        CompletionStage<Done> msg4 = service.disableCustomer(UUID).invoke();
         Done disableCustomerResponse = msg4.toCompletableFuture().get(5, SECONDS);
 
         try {
-            CompletionStage<Customer> msg5 = service.getCustomer("69c118f0-d5b1-4c4b-9e92-6cc1a0810a25").invoke();
+            CompletionStage<Customer> msg5 = service.getCustomer(UUID).invoke();
             Customer customerResponse = msg5.toCompletableFuture().get(5, SECONDS);
             Assert.fail("Customer should be disabled, and exception thrown");
-        } catch (ExecutionException notFound) {
-            assertThat(notFound.getMessage()).contains("disabled");
+        } catch (Exception notFound) {
+            assertThat(notFound.getMessage()).contains("Unhandled command");
         }
     }
 }

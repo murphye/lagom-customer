@@ -1,5 +1,7 @@
 package lightbend.customer.impl.entity;
 
+import akka.Done;
+import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import lightbend.customer.api.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,30 +10,26 @@ import lombok.NoArgsConstructor;
 import com.lightbend.lagom.serialization.CompressedJsonable;
 import lombok.Value;
 
+import java.util.Optional;
+
 /**
  * Customer state object used for event sourcing. Stored as binary data in the journal because of CompressedJsonable.
  */
 @Value
-@AllArgsConstructor
-public final class CustomerState implements CompressedJsonable {
+public class CustomerState implements CompressedJsonable {
 
-    public static final CustomerState EMPTY = new CustomerState();
+    private final Optional<Customer> customer;
+    private final CustomerStatus status;
 
-    /**
-     * Reference to the customer object.
-     */
-    private Customer customer;
+    public static CustomerState newCustomer() {
+        return new CustomerState(Optional.empty(), CustomerStatus.NEW);
+    }
 
-    /**
-     * Whether the customer is enabled or not; acts like a soft delete.
-     */
-    private boolean enabled;
+    public static CustomerState addedCustomer(Customer customer) {
+        return new CustomerState(Optional.of(customer), CustomerStatus.ADDED);
+    }
 
-    /**
-     * Used for initial state.
-     */
-    private CustomerState() {
-        this.customer = null;
-        this.enabled = false;
+    public static CustomerState disabledCustomer(Customer customer) {
+        return new CustomerState(Optional.of(customer), CustomerStatus.DISABLED);
     }
 }

@@ -18,12 +18,12 @@ public interface CustomerEvent extends Jsonable, AggregateEvent<CustomerEvent> {
     }
 
     @Value
-    public final class CustomerAdded implements CustomerEvent {
+    final class CustomerAdded implements CustomerEvent {
         @NonNull private final Customer customer;
     }
 
     @Value
-    public final class CustomerDisabled implements CustomerEvent {
+    final class CustomerDisabled implements CustomerEvent {
         @NonNull private final Customer customer;
     }
 }
