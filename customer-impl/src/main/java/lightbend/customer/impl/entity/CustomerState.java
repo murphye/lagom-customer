@@ -1,11 +1,6 @@
 package lightbend.customer.impl.entity;
 
-import akka.Done;
-import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import lightbend.customer.api.Customer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import com.lightbend.lagom.serialization.CompressedJsonable;
 import lombok.Value;

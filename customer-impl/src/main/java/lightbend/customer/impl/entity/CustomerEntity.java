@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import akka.Done;
-import lightbend.customer.api.Customer;
 
 /**
  * The CustomerEntity handles commands and events while maintaining state through event sourcing.

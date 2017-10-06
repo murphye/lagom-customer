@@ -9,7 +9,6 @@ import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 import static com.lightbend.lagom.javadsl.testkit.ServiceTest.defaultSetup;
 import static com.lightbend.lagom.javadsl.testkit.ServiceTest.startServer;

@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ServiceCall<Customer, Done> addCustomer() {
         return customer ->
-            entityRef(customer.getId()).ask(new CustomerCommand.AddCustomer(customer));
+                entityRef(customer.getId()).ask(new CustomerCommand.AddCustomer(customer));
     }
 
     /**
@@ -63,10 +63,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ServiceCall<NotUsed, Customer> getCustomer(String customerId) {
         return notUsed -> {
-            CompletionStage<CustomerState> getCustomer = entityRef(customerId).ask(CustomerCommand.GetCustomer.INSTANCE);
-            return getCustomer.thenApply(customerState -> {
-                return customerState.getCustomer().get();
-            });
+                CompletionStage<CustomerState> getCustomer = entityRef(customerId).ask(CustomerCommand.GetCustomer.INSTANCE);
+                return getCustomer.thenApply(customerState -> {
+                    return customerState.getCustomer().get();
+                });
         };
     }
 
