@@ -4,8 +4,8 @@ import akka.Done;
 import akka.NotUsed;
 import com.google.common.collect.ImmutableList;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
+import com.lightbend.lagom.javadsl.api.transport.BadRequest;
 import com.lightbend.lagom.javadsl.api.transport.NotFound;
-import com.lightbend.lagom.javadsl.api.transport.TransportException;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRef;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
 import com.lightbend.lagom.javadsl.persistence.ReadSide;
@@ -15,7 +15,8 @@ import lightbend.customer.api.CustomerService;
 import lightbend.customer.impl.entity.CustomerCommand;
 import lightbend.customer.impl.entity.CustomerEntity;
 import lightbend.customer.impl.entity.CustomerState;
-import lightbend.customer.impl.entity.CustomerStatus;
+
+import com.lightbend.lagom.javadsl.persistence.PersistentEntity.UnhandledCommandException;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
@@ -63,8 +64,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ServiceCall<NotUsed, Customer> getCustomer(String customerId) {
         return notUsed -> {
-                CompletionStage<CustomerState> getCustomer = entityRef(customerId).ask(CustomerCommand.GetCustomer.INSTANCE);
-                return getCustomer.thenApply(customerState -> {
+                CompletionStage<CustomerState> getCustomerFuture =
+                        entityRef(customerId).ask(CustomerCommand.GetCustomer.INSTANCE);
+
+                // Trap the UnhandledCommandException and rethrow a Lagom transport exception
+                getCustomerFuture = getCustomerFuture.exceptionally(throwable -> {
+                    if(throwable instanceof UnhandledCommandException) {
+                        throw new NotFound("Customer is disabled");
+                    }
+                    else {
+                        throw new BadRequest(throwable); // Some other unknown error
+                    }
+                });
+
+                return getCustomerFuture.thenApply(customerState -> {
                     return customerState.getCustomer().get();
                 });
         };
