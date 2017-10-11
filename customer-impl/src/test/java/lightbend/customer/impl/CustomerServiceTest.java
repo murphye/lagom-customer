@@ -68,7 +68,7 @@ public class CustomerServiceTest {
             Customer customerResponse = msg5.toCompletableFuture().get(5, SECONDS);
             Assert.fail("Customer should be disabled, and exception thrown");
         } catch (Exception notFound) {
-            assertThat(notFound.getMessage()).contains("Unhandled command");
+            assertThat(notFound.getMessage()).contains("Customer is disabled");
         }
     }
 }
