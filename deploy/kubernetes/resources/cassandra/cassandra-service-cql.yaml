@@ -1,0 +1,16 @@
+# Exposes NodePort so you can connect with cqlsh to the Cassandra cluster
+# 1) minikube service cassandra-cql --url
+# 2) Copy IP Address and port # returned
+# 3) Use to run CQL: cqlsh 192.168.99.100 32625
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+  name: cassandra-cql
+spec:
+  ports:
+  - port: 9042
+  selector:
+    app: cassandra
+  type: NodePort
