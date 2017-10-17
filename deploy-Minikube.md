@@ -4,12 +4,28 @@
 
 * [Maven](https://maven.apache.org/)
 * [Docker](https://www.docker.com/)
+* [VirtualBox](https://www.virtualbox.org)
 * [Minikube](https://kubernetes.io/docs/getting-started-guides/minikube/)
 
 ### Recommended Reading
 
 * [Deploying Lagom Microservices on Kubernetes](https://developer.lightbend.com/guides/lagom-kubernetes-k8s-deploy-microservices/)
 
+## Install VirtualBox
+
+https://www.virtualbox.org/wiki/Downloads
+
+### Install kubectl
+
+```brew install kubectl```
+
+### Install Minikube
+
+```
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.22.3/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+minikube start --memory 5120 --cpus=4
+```
 
 ### Deploy Lagom to Minikube
 ```
