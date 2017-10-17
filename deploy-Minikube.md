@@ -15,7 +15,7 @@
 ```
 deploy/kubernetes/scripts/install --minikube --new-minikube --all
 ```
-####Output:
+#### Output:
 ```
 ****************************
 ***  Deploying customer   ***
@@ -65,6 +65,6 @@ Customer Service (HTTPS): https://192.168.99.100:30797
 Kubernetes Dashboard: http://192.168.99.100:30000
 
 ```
-####Add a customer
+#### Add a customer
 
 ```curl -H "Content-Type: application/json" -X POST -d '{"name": "Eric Murphy", "city": "San Francisco", "state": "CA", "zipCode": "94105"}' http://192.168.99.100:31387/customer```

@@ -1,6 +1,6 @@
-##Running Lagom in Azure Container Service (ACS)
+## Running Lagom in Azure Container Service (ACS)
 
-###Recommended Reading
+### Recommended Reading
 
 * [Azure Free Trial](https://azure.microsoft.com/en-us/offers/ms-azr-0044p/)
 * [Azure Pay-As-You-Go](https://azure.microsoft.com/en-us/offers/ms-azr-0003p/)
@@ -9,18 +9,18 @@
 * [Azure CLI Github Issues](https://github.com/Azure/azure-cli/issues)
 * [Deploying Lagom Microservices on Kubernetes](https://developer.lightbend.com/guides/lagom-kubernetes-k8s-deploy-microservices/)
 
-###Recommendations
+### Recommendations
 
 * Do a deployment to MiniKube first to learn how the install script works
 * Upgrade to Pay-As-You-Go subscription, as the Free Trial will place very limited quotas that will make it difficult to impossible to spin up k8s clusters
 * Azure CLI seems to be very raw in regards to the Container Service. If you have problems, look at the Github issues
 * Don't rely on the Azure Web Console for much of anything; stick to the CLI
 
-###Install the Azure CLI
+### Install the Azure CLI
 
 ```brew install azure-cli```
 
-###Login via the Azure CLI
+### Login via the Azure CLI
 
 After creating your Azure account, you will be able to log in through the CLI and the web browser.
 
@@ -31,7 +31,7 @@ To sign in, use a web browser to open the page https://aka.ms/devicelogin and en
 https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-walkthrough
 ```
 
-###Create Resource Group
+### Create Resource Group
 
 ```az group create --name customer --location eastus```
 
