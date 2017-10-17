@@ -11,7 +11,7 @@
 
 ### Recommendations
 
-* Do a deployment to MiniKube first to learn how the install script works
+* Do a deployment to Minikube first to learn how the install script works
 * Upgrade to Pay-As-You-Go subscription, as the Free Trial will place very limited quotas that will make it difficult to impossible to spin up k8s clusters
 * Azure CLI seems to be very raw in regards to the Container Service. If you have problems, look at the Github issues
 * Don't rely on the Azure Web Console for much of anything; stick to the CLI
@@ -27,8 +27,6 @@ After creating your Azure account, you will be able to log in through the CLI an
 ```
 az login
 To sign in, use a web browser to open the page https://aka.ms/devicelogin and enter the code
-
-https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-walkthrough
 ```
 
 ### Create Resource Group
