@@ -1,4 +1,5 @@
-# Cassandra with StatefulSets on Kubernetes
+
+# Persistent Cassandra on k8s Research
 
 This directory contains the source code and Kubernetes manifests for Cassandra
 deployment with StatefulSets tutorial.

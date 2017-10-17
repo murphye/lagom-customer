@@ -45,6 +45,11 @@
             <artifactId>lagom-javadsl-testkit_2.11</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Service Locator Provider -->
+        <dependency>
+            <groupId>${serviceLocator.provider.groupName}</groupId>
+            <artifactId>${serviceLocator.provider.artifactName}</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

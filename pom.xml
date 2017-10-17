@@ -92,6 +92,12 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <!-- Service Locator Provider -->
+            <dependency>
+                <groupId>${serviceLocator.provider.groupName}</groupId>
+                <artifactId>${serviceLocator.provider.artifactName}</artifactId>
+                <version>${serviceLocator.provider.artifactVersion}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -113,4 +119,38 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lagom.version>1.4.0-M2</lagom.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>akka-dns</id>
+            <name>akka-dns</name>
+            <url>https://dl.bintray.com/hajile/maven</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>kubernetes</id>
+            <properties>
+                <buildTarget>kubernetes</buildTarget>
+                <serviceLocator.provider.groupName>com.lightbend</serviceLocator.provider.groupName>
+                <serviceLocator.provider.artifactName>lagom14-java-service-locator-dns_2.11</serviceLocator.provider.artifactName>
+                <serviceLocator.provider.artifactVersion>2.2.2</serviceLocator.provider.artifactVersion>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>

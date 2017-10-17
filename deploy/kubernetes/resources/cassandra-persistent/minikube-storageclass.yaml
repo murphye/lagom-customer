@@ -1,7 +1,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-  name: minikube
+  name: customer-storage
 provisioner: k8s.io/minikube-hostpath
 parameters:
   type: pd-ssd

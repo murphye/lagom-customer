@@ -11,9 +11,6 @@ spec:
       - backend:
           serviceName: customerservice
           servicePort: 9000
-        path: /api/chirps
-      - backend:
-          serviceName: web
-          servicePort: 9000
+        path: /customer
   tls:
   - secretName: customer-tls-secret

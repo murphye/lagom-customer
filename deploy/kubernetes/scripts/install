@@ -97,10 +97,10 @@ echo "Registry:          $([ "$REGISTRY" = "" ]        && echo "N/A" || echo "$R
 echo "Minikube:          $([ "$MINIKUBE" = 1 ]         && echo "$([ "$MINIKUBE_RESET" = 1 ] && echo "New" || echo "Yes")" || echo "No")"
 echo "Configure TLS:     $([ "$CONFIGURE_TLS" = 1 ]    && echo "Yes" || echo "No")"
 echo "Deploy Cassandra:  $([ "$DEPLOY_CASSANDRA" = 1 ] && echo "Yes" || echo "No")"
-echo "Build CUSTOMER:     $([ "$BUILD_CUSTOMER" = 1 ]    && echo "Yes" || echo "No")"
-echo "Upload CUSTOMER:    $([ "$UPLOAD_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
-echo "Delete CUSTOMER:    $([ "$DELETE_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
-echo "Deploy CUSTOMER:    $([ "$DEPLOY_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
+echo "Build Customer:     $([ "$BUILD_CUSTOMER" = 1 ]    && echo "Yes" || echo "No")"
+echo "Upload Customer:    $([ "$UPLOAD_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
+echo "Delete Customer:    $([ "$DELETE_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
+echo "Deploy Customer:    $([ "$DEPLOY_CUSTOMER" = 1 ]   && echo "Yes" || echo "No")"
 echo "Deploy nginx:      $([ "$DEPLOY_NGINX" = 1 ]     && echo "Yes" || echo "No")"
 echo
 if [ "$MINIKUBE" = 0 ]; then
@@ -232,7 +232,7 @@ kubectl get all
 if [ "$MINIKUBE" = 1 ]; then
     echo
     echo
-    echo "CUSTOMER UI (HTTP): $(minikube service --url nginx-ingress | head -n 1)"
-    echo "CUSTOMER UI (HTTPS): $(minikube service --url --https nginx-ingress | tail -n 1)"
+    echo "Customer Service (HTTP): $(minikube service --url nginx-ingress | head -n 1)"
+    echo "Customer Service (HTTPS): $(minikube service --url --https nginx-ingress | tail -n 1)"
     echo "Kubernetes Dashboard: $(minikube dashboard --url)"
 fi

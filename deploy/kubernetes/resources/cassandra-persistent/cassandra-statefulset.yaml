@@ -83,7 +83,7 @@ spec:
   - metadata:
       name: cassandra-data
       annotations:
-        volume.beta.kubernetes.io/storage-class: minikube
+        volume.beta.kubernetes.io/storage-class: customer-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
