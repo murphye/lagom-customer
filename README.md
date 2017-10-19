@@ -9,6 +9,11 @@ This is a sample Lagom/Java application that has a Customer service that allows 
 
 This implementation uses Cassandra for both the write-side and read-side.
 
+# Useful Maven Commands
+
+* mvn lagom:runAll
+* mvn clean package docker:build
+
 # Example curl commands
 
 1. curl -H "Content-Type: application/json" -X POST -d '{"name": "Eric Murphy", "city": "San Francisco", "state": "CA", "zipCode": "94105"}' http://localhost:9000/customer
